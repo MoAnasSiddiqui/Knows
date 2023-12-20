@@ -1,4 +1,10 @@
-public class Student extends Person{
+public class Student extends Person {
     private Semester[] semesters;
-    Student(){};
+
+    public Student() {
+    };
+
+    public Student(String username, String password, String name) {
+        super(username, password, name);
+    }
 }
