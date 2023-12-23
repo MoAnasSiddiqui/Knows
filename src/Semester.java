@@ -7,6 +7,10 @@ public class Semester {
         registeredCourses = new ArrayList<Marks>();
     }
 
+    Semester(ArrayList<Marks> regCourses) {
+        registeredCourses = regCourses;
+    }
+
     public void addCourse(Marks course) {
         registeredCourses.add(course);
     }

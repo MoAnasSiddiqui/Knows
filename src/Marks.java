@@ -8,6 +8,13 @@ public class Marks {
   private double[] mids;
   private double[] terminals;
 
+  public Marks() {
+  }
+
+  public Marks(Course course) {
+    this.course = course;
+  }
+
   public void addAssignment(double marks) {
   }
 
