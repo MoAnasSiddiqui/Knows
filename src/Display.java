@@ -16,18 +16,19 @@ public class Display{
     }
     public static void displayOptions(String[] options){
         for (int i=0; i<options.length; i++){
-            System.out.println((i+1)%options.length + ": " + options[i]);
+            System.out.println((i+1) + ": " + options[i]);
         }
+        System.out.println("0: Exit");
         System.out.println();
     }
     public static int chooseOption(int range){
         int choice = -1;
-        while (choice < 0 || choice >= range){
+        while (choice < 0 || choice > range){
             System.out.print("Enter: ");
             try{
                 choice = input.nextInt();
                 input.nextLine();
-                if (choice >=0 && choice < range){
+                if (choice >=0 && choice <= range){
                     break;
                 } 
                 else {
@@ -41,7 +42,6 @@ public class Display{
         return choice;
     }
     public static int menu(String[] options){
-        logo();
         displayOptions(options);
         return chooseOption(options.length);
     }
