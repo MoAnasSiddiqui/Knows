@@ -9,6 +9,7 @@ public class Student extends Person {
 
     public Student(String username, String password, String name) {
         super(username, password, name);
+        semesters = new ArrayList<>();
     }
 
     public void addSemester(Semester semester) {

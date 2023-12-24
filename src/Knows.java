@@ -45,6 +45,7 @@ public class Knows {
                     }
                 }
             }
+            adminPage();
 
         } else {
             mainPage();
@@ -163,15 +164,18 @@ public class Knows {
             username = input.nextLine();
             ArrayList<Student> students = Admin.getStudents();
             for (Student student : students) {
-                if (username == student.getCredential().getUsername()) {
+                if (username.compareTo(student.getCredential().getUsername()) == 0) {
                     password = input.nextLine();
                     if (student.getCredential().validatePin(password)) {
                         studentPortal(student);
                     } else {
                         studentPage();
                     }
+                } else {
+                    studentPage();
                 }
             }
+            studentPage();
         } else {
             mainPage();
         }
