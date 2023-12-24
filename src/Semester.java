@@ -15,6 +15,10 @@ public class Semester {
         registeredCourses.add(course);
     }
 
+    public ArrayList<Marks> getRegisteredCourses() {
+        return registeredCourses;
+    }
+
     @Override
     public String toString() {
         return registeredCourses.get(registeredCourses.size() - 1).toString();

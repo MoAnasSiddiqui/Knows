@@ -6,13 +6,20 @@ public class Admin extends Person {
   private static ArrayList<Course> courses;
 
   Admin() {
+    students = new ArrayList<>();
+    facultyMembers = new ArrayList<>();
+    courses = new ArrayList<>();
   }
 
   public Admin(String username, String password, String name) {
     super(username, password, name);
+    students = new ArrayList<>();
+    facultyMembers = new ArrayList<>();
+    courses = new ArrayList<>();
   }
 
   public static void registerStudent(String username, String password, String name, Course[] registeredCourses) {
+    System.out.println("hello");
     Student newStudent = new Student(username, password, name);
     ArrayList<Marks> marksObjs = new ArrayList<>();
     for (Course c : registeredCourses) {
