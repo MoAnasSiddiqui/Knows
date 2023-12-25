@@ -19,4 +19,8 @@ public class Student extends Person {
     public ArrayList<Semester> getSemesters() {
         return semesters;
     }
+
+    public Semester getLastSemester() {
+        return semesters.get(semesters.size() - 1);
+    }
 }

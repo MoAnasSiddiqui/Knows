@@ -1,18 +1,39 @@
+import java.util.ArrayList;
 
 public class Course {
     private String id;
     private String name;
     private int theoryHours;
     private int labHours;
+    private ArrayList<Student> registeredStudents;
 
     Course() {
+        registeredStudents = new ArrayList<>();
     }
 
     public Course(String id, String name, int theoryHours, int labHours) {
+        this();
         setId(id);
         setName(name);
         setTheoryHours(theoryHours);
         setLabHours(labHours);
+    }
+
+    public ArrayList<Student> getRegisteredStudents() {
+        return registeredStudents;
+    }
+
+    public Student getStudent(String username) {
+        for (Student s : registeredStudents) {
+            if (s.getCredential().getUsername().compareTo(username) == 0) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public void registerStudent(Student student) {
+        registeredStudents.add(student);
     }
 
     public void setId(String id) {
