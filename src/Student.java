@@ -21,6 +21,9 @@ public class Student extends Person {
     }
 
     public Semester getLastSemester() {
+        if (semesters.size() == 0) {
+            return null;
+        }
         return semesters.get(semesters.size() - 1);
     }
 }

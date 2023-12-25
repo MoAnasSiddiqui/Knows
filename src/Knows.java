@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Knows {
     private static Scanner input = new Scanner(System.in);
-    private static Admin[] admins = { new Admin("admin", "admin123", "Admin") };
+    private static Admin[] admins = { new Admin("admin", "admin123", "Admin"), new Admin("a", "a", "a") };
     static int choice;
 
     public static void main(String[] args) {
@@ -70,7 +70,8 @@ public class Knows {
         System.out.println("[Admin Portal]");
         System.out.println();
         choice = Display.menu(
-                new String[] { "Register Student", "Register Faculty Member", "Register Course", "End Semester" });
+                new String[] { "Register Student", "Register Faculty Member", "Register Course for KNOWS",
+                        "Register Course for Student", "End Semester" });
         if (choice == 1) {
             Display.logo();
             System.out.println("[Student Registration]");
@@ -83,15 +84,15 @@ public class Knows {
             System.out.print("Password: ");
             String password = input.nextLine();
 
-            ArrayList<Course> courseList = chooseCourse(new ArrayList<Course>());
+            // ArrayList<Course> courseList = chooseCourse(new ArrayList<Course>());
 
-            Course[] studentCourses = new Course[courseList.size()];
+            // // Course[] studentCourses = new Course[courseList.size()];
 
-            for (int i = 0; i < courseList.size(); i++) {
-                studentCourses[i] = courseList.get(i);
-            }
+            // // for (int i = 0; i < courseList.size(); i++) {
+            // // studentCourses[i] = courseList.get(i);
+            // // }
 
-            Admin.registerStudent(username, password, name, studentCourses);
+            Admin.registerStudent(username, password, name);
             System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();
@@ -117,7 +118,7 @@ public class Knows {
 
         } else if (choice == 3) {
             Display.logo();
-            System.out.println("[Course Registration]");
+            System.out.println("[Course Registration for KNOWS]");
             System.out.println("\n");
             System.out.println("Provide Course Details\n");
             System.out.print("Course Name: ");
@@ -135,7 +136,26 @@ public class Knows {
             System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();
-        } else if (choice == 0) {
+
+        } else if (choice == 4) {
+            Display.logo();
+            System.out.println("[Course Registration for Students]");
+            System.out.println("\n");
+            for (int i = 0; i < Admin.getStudents().size(); i++) {
+                System.out.println((i + 1) + ": " + Admin.getStudents().get(i).getCredential().getUsername());
+            }
+            System.out.println("0: Exit\n\n");
+            choice = Display.chooseOption(Admin.getStudents().size());
+            if (choice == 0) {
+                adminPortal();
+            } else {
+                ArrayList<Course> studentCourses = new ArrayList<>();
+                Student student = Admin.getStudents().get(choice - 1);
+                ArrayList<Course> courses = chooseCourse(studentCourses);
+                Admin.registerStudentCourses(student, courses);
+                adminPortal();
+            }
+        } else {
             adminPage();
         }
     }
@@ -149,6 +169,7 @@ public class Knows {
         }
         System.out.println("0: Exit\n");
         choice = Display.chooseOption(courses.size());
+        System.out.println(choice);
         if (choice == 0) {
             return chooseCourse();
         }
@@ -170,8 +191,10 @@ public class Knows {
                     + "\n\nPress Enter to continue...");
             input.nextLine();
             return chooseCourse(studentCourses);
+        } else {
+            return studentCourses;
         }
-        return studentCourses;
+
     }
 
     static void facultyPage() {

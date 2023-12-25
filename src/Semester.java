@@ -15,6 +15,10 @@ public class Semester {
         registeredCourses.add(course);
     }
 
+    public void setRegisteredCourses(ArrayList<Marks> registeredCourses) {
+        this.registeredCourses = registeredCourses;
+    }
+
     public Marks getMarksObj(Course course) {
         for (Marks m : registeredCourses) {
             if (m.getCourse().getId().compareTo(course.getId()) == 0) {
