@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Faculty extends Person {
+public class Faculty extends Person implements Serializable {
     private Course course;
 
     Faculty() {
@@ -23,6 +24,8 @@ public class Faculty extends Person {
         Marks marksObj = semester.getMarksObj(course);
 
         marksObj.updateAssignment(num, marks);
+
+        Admin.updateStudentFile();
     }
 
     public void updateQuizMarks(Student student, int num, double marks) {
@@ -30,6 +33,7 @@ public class Faculty extends Person {
         Marks marksObj = semester.getMarksObj(course);
 
         marksObj.updateQuiz(num, marks);
+        Admin.updateStudentFile();
     }
 
     public void updateLabAssignmentMarks(Student student, double marks) {
@@ -37,6 +41,7 @@ public class Faculty extends Person {
         Marks marksObj = semester.getMarksObj(course);
 
         marksObj.updateLabAssignment(marks);
+        Admin.updateStudentFile();
     }
 
     public void updateMidMarks(Student student, int num, double marks) {
@@ -44,6 +49,7 @@ public class Faculty extends Person {
         Marks marksObj = semester.getMarksObj(course);
 
         marksObj.updateMid(num, marks);
+        Admin.updateStudentFile();
     }
 
     public void updateTerminalMarks(Student student, int num, double marks) {
@@ -51,6 +57,7 @@ public class Faculty extends Person {
         Marks marksObj = semester.getMarksObj(course);
 
         marksObj.updateTerminal(num, marks);
+        Admin.updateStudentFile();
     }
 
     @Override

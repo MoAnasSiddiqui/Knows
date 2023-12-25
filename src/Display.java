@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Display{
+public class Display implements Serializable {
     public static Scanner input = new Scanner(System.in);
+
     public static void logo() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
@@ -12,36 +14,39 @@ public class Display{
                 System.out.flush();
             }
             System.out.println("\n\n               KNOWS\n\n");
-        } catch (Exception e) { /* Handle exceptions */ }
+        } catch (Exception e) {
+            /* Handle exceptions */ }
     }
-    public static void displayOptions(String[] options){
-        for (int i=0; i<options.length; i++){
-            System.out.println((i+1) + ": " + options[i]);
+
+    public static void displayOptions(String[] options) {
+        for (int i = 0; i < options.length; i++) {
+            System.out.println((i + 1) + ": " + options[i]);
         }
         System.out.println("0: Exit");
         System.out.println();
     }
-    public static int chooseOption(int range){
+
+    public static int chooseOption(int range) {
         int choice = -1;
-        while (choice < 0 || choice > range){
+        while (choice < 0 || choice > range) {
             System.out.print("Enter: ");
-            try{
+            try {
                 choice = input.nextInt();
                 input.nextLine();
-                if (choice >=0 && choice <= range){
+                if (choice >= 0 && choice <= range) {
                     break;
-                } 
-                else {
+                } else {
                     System.out.println("Not valid input...");
                 }
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Not valid option...");
                 input.nextLine();
             }
         }
         return choice;
     }
-    public static int menu(String[] options){
+
+    public static int menu(String[] options) {
         displayOptions(options);
         return chooseOption(options.length);
     }

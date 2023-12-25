@@ -1,12 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Knows {
+public class Knows implements Serializable {
     private static Scanner input = new Scanner(System.in);
     private static Admin[] admins = { new Admin("admin", "admin123", "Admin"), new Admin("a", "a", "a") };
     static int choice;
 
     public static void main(String[] args) {
+        input.nextLine();
         mainPage();
     }
 

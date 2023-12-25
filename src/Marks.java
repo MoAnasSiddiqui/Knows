@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Marks {
+public class Marks implements Serializable {
   private Course course;
   private double[] assignments;
   private double[] quizes;

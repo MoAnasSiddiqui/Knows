@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Semester {
+public class Semester implements Serializable {
     private ArrayList<Marks> registeredCourses;
 
     Semester() {

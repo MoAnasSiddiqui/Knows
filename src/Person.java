@@ -1,4 +1,6 @@
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
     private Credential credential;
     private String name;
 

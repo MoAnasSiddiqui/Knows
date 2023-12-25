@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Course {
+public class Course implements Serializable {
     private String id;
     private String name;
     private int theoryHours;
