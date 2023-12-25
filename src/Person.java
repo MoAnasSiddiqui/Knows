@@ -26,5 +26,8 @@ public abstract class Person {
         return name;
     }
 
-
+    @Override
+    public String toString() {
+        return String.format("Username: %s\nName: %s", credential.getUsername(), name);
+    }
 }

@@ -8,7 +8,6 @@ public class Knows {
 
     public static void main(String[] args) {
         mainPage();
-
     }
 
     static void mainPage() {
@@ -202,9 +201,106 @@ public class Knows {
         System.out.println();
         choice = Display.menu(new String[] { "Login" });
         if (choice == 1) {
-            System.out.println("This is faculty login");
+            facultyLogin();
         } else {
             mainPage();
+        }
+    }
+
+    static void facultyLogin() {
+        Display.logo();
+        System.out.println("[Faculty Login]");
+        System.out.println("\n");
+        String username, password;
+        System.out.print("Enter Username: ");
+        username = input.nextLine();
+        for (Faculty faculty : Admin.getFacultyMembers()) {
+            if (username.compareTo(faculty.getCredential().getUsername()) == 0) {
+                System.out.print("Enter Password: ");
+                password = input.nextLine();
+                if (faculty.getCredential().validatePin(password)) {
+                    System.out.print("\nLogin successful\n\nPress Enter to continue...");
+                    input.nextLine();
+                    facultyPortal(faculty);
+                } else {
+                    System.out.print("\nIncorrect Password\n\nPress Enter to to go back...");
+                    input.nextLine();
+                    facultyPage();
+                }
+            }
+        }
+        System.out.print("\nCannot find username\n\nPress Enter to to go back...");
+        input.nextLine();
+        facultyPage();
+    }
+
+    static void facultyPortal(Faculty faculty) {
+        Display.logo();
+        choice = Display.menu(new String[] { "View faculty details", "Add Marks" });
+        if (choice == 1) {
+            Display.logo();
+            System.out.println(faculty.toString());
+            System.out.print("\nPress Enter to go back...");
+            input.nextLine();
+            facultyPortal(faculty);
+        } else if (choice == 2) {
+            ArrayList<Student> registeredStudents = faculty.getCourse().getRegisteredStudents();
+            String[] studentNames = new String[registeredStudents.size()];
+            for (int i = 0; i < studentNames.length; i++) {
+                studentNames[i] = registeredStudents.get(i).getCredential().getUsername();
+            }
+            choice = Display.menu(studentNames);
+            System.out.println("Choose the student you want to add marks of from the above students list.");
+            if (choice != 0) {
+                Student selectedStudent = registeredStudents.get(choice - 1);
+                Display.logo();
+                choice = Display.menu(new String[] { "Add Assigment Marks", "Add Quiz Marks",
+                        "Add Lab Assignment Marks", "Add Mid Marks", "Add Terminal Marks" });
+                if (choice == 1) {
+                    System.out.print("Enter Assignment Number: ");
+                    int num = input.nextInt();
+                    System.out.print("Enter Assignment Marks: ");
+                    double marks = input.nextDouble();
+                    input.nextLine();
+                    faculty.updateAssignmentMarks(selectedStudent, num, marks);
+                    System.out.print("Assignment Marks successfully added");
+                } else if (choice == 2) {
+                    System.out.print("Enter Quiz Number: ");
+                    int num = input.nextInt();
+                    System.out.print("Enter Quiz Marks: ");
+                    double marks = input.nextDouble();
+                    input.nextLine();
+                    faculty.updateQuizMarks(selectedStudent, num, marks);
+                    System.out.print("Quiz Marks successfully added");
+                } else if (choice == 3) {
+                    System.out.print("Enter Lab Assignment Marks: ");
+                    double marks = input.nextDouble();
+                    input.nextLine();
+                    faculty.updateLabAssignmentMarks(selectedStudent, marks);
+                    System.out.print("Lab Assignment Marks successfully added");
+                } else if (choice == 4) {
+                    System.out.print("Enter 0 for Theory Mid and 1 for Lab Mid: ");
+                    int num = input.nextInt();
+                    System.out.print("Enter Mid Marks: ");
+                    double marks = input.nextDouble();
+                    input.nextLine();
+                    faculty.updateMidMarks(selectedStudent, num, marks);
+                    System.out.print("Mid Marks successfully added");
+                } else if (choice == 5) {
+                    System.out.print("Enter 0 for Theory Terminal and 1 for Lab Terminal: ");
+                    int num = input.nextInt();
+                    System.out.print("Enter Terminal Marks: ");
+                    double marks = input.nextDouble();
+                    input.nextLine();
+                    faculty.updateTerminalMarks(selectedStudent, num, marks);
+                    System.out.print("Terminal Marks successfully added");
+                }
+                System.out.print("\nPress Enter to go back...");
+                input.nextLine();
+                facultyPortal(faculty);
+            }
+        } else {
+            facultyPage();
         }
     }
 

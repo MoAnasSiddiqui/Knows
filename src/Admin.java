@@ -11,8 +11,8 @@ public class Admin extends Person {
   public Admin(String username, String password, String name) {
     super(username, password, name);
     students = new ArrayList<>();
-    registerStudent("FA22-BCS-045", "Anas", "anas045");
-    registerStudent("FA22-BCS-022", "Asfer", "asfer022");
+    registerStudent("FA22-BCS-045", "anas045", "Anas");
+    registerStudent("FA22-BCS-017", "asfer017", "Asfer");
     facultyMembers = new ArrayList<>();
     courses = new ArrayList<>();
     registerCourse("CSC110", "OOP", 3, 1);
@@ -31,6 +31,7 @@ public class Admin extends Person {
   public static void registerStudentCourses(Student student, ArrayList<Course> registeredCourses) {
     ArrayList<Marks> marksObjs = new ArrayList<>();
     for (Course c : registeredCourses) {
+      c.registerStudent(student);
       marksObjs.add(new Marks(c));
     }
     student.getLastSemester().setRegisteredCourses(marksObjs);

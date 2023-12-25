@@ -22,11 +22,11 @@ public class Marks {
   }
 
   public void updateAssignment(int place, double marks) {
-    assignments[place] = marks;
+    assignments[place - 1] = marks;
   }
 
   public void updateQuiz(int place, double marks) {
-    quizes[place] = marks;
+    quizes[place - 1] = marks;
   }
 
   public void updateLabAssignment(double marks) {
@@ -61,7 +61,7 @@ public class Marks {
     message = message + "\nQuizes: \n";
     for (int i = 0; i < 4; i++) {
       if (assignments[i] != -1) {
-        message = message + "Quiz " + (i + 1) + ": " + assignments[i] + "\n";
+        message = message + "Quiz " + (i + 1) + ": " + quizes[i] + "\n";
       } else {
         message = message + "Quiz " + (i + 1) + ": null" + "\n";
       }

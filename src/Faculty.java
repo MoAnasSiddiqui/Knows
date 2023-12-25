@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Faculty extends Person {
     private Course course;
@@ -52,6 +51,11 @@ public class Faculty extends Person {
         Marks marksObj = semester.getMarksObj(course);
 
         marksObj.updateTerminal(num, marks);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s\n%s", super.toString(), course.toString());
     }
 
 }
