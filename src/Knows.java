@@ -8,7 +8,7 @@ public class Knows {
 
     public static void main(String[] args) {
         mainPage();
-        System.out.println("\n\nKNOWS. All Rights Reserved. Copyright 2023.\n");
+
     }
 
     static void mainPage() {
@@ -20,6 +20,9 @@ public class Knows {
             facultyPage();
         } else if (choice == 3) {
             studentPage();
+        } else if (choice == 0) {
+            System.out.println("\n\nKNOWS. All Rights Reserved. Copyright 2023.\n");
+            System.exit(0);
         }
     }
 
