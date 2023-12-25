@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Knows implements Serializable {
     private static Scanner input = new Scanner(System.in);
-    private static Admin[] admins = { new Admin("admin", "admin123", "Admin"), new Admin("a", "a", "a") };
+    private static Admin[] admins = { new Admin("a", "a", "a") };
     static int choice;
 
     public static void main(String[] args) {
@@ -85,14 +85,6 @@ public class Knows implements Serializable {
             System.out.print("Password: ");
             String password = input.nextLine();
 
-            // ArrayList<Course> courseList = chooseCourse(new ArrayList<Course>());
-
-            // // Course[] studentCourses = new Course[courseList.size()];
-
-            // // for (int i = 0; i < courseList.size(); i++) {
-            // // studentCourses[i] = courseList.get(i);
-            // // }
-
             Admin.registerStudent(username, password, name);
             System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
@@ -133,7 +125,7 @@ public class Knows implements Serializable {
             int labHours = input.nextInt();
             input.nextLine();
 
-            Admin.registerCourse(id, name, theoryHours, labHours);
+            Admin.registerKNOWSCourse(id, name, theoryHours, labHours);
             System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();
@@ -216,7 +208,7 @@ public class Knows implements Serializable {
         String username, password;
         System.out.print("Enter Username: ");
         username = input.nextLine();
-        for (Faculty faculty : Admin.getFacultyMembers()) {
+        for (Faculty faculty : Admin.getFaculty()) {
             if (username.compareTo(faculty.getCredential().getUsername()) == 0) {
                 System.out.print("Enter Password: ");
                 password = input.nextLine();
@@ -261,6 +253,7 @@ public class Knows implements Serializable {
                 if (choice == 1) {
                     System.out.print("Enter Assignment Number: ");
                     int num = input.nextInt();
+                    input.nextLine();
                     System.out.print("Enter Assignment Marks: ");
                     double marks = input.nextDouble();
                     input.nextLine();
@@ -269,6 +262,7 @@ public class Knows implements Serializable {
                 } else if (choice == 2) {
                     System.out.print("Enter Quiz Number: ");
                     int num = input.nextInt();
+                    input.nextLine();
                     System.out.print("Enter Quiz Marks: ");
                     double marks = input.nextDouble();
                     input.nextLine();
@@ -283,6 +277,7 @@ public class Knows implements Serializable {
                 } else if (choice == 4) {
                     System.out.print("Enter 0 for Theory Mid and 1 for Lab Mid: ");
                     int num = input.nextInt();
+                    input.nextLine();
                     System.out.print("Enter Mid Marks: ");
                     double marks = input.nextDouble();
                     input.nextLine();
@@ -291,6 +286,7 @@ public class Knows implements Serializable {
                 } else if (choice == 5) {
                     System.out.print("Enter 0 for Theory Terminal and 1 for Lab Terminal: ");
                     int num = input.nextInt();
+                    input.nextLine();
                     System.out.print("Enter Terminal Marks: ");
                     double marks = input.nextDouble();
                     input.nextLine();
@@ -367,7 +363,7 @@ public class Knows implements Serializable {
         System.out.println("[Current Semester Summary]");
         System.out.println("\n");
         ArrayList<Marks> registeredCourses = student.getSemesters().get((student.getSemesters().size()) - 1)
-                .getRegisteredCourses();
+                .getRegisteredCourseMarks();
         int iterator = 1;
         for (Marks mark : registeredCourses) {
             System.out.println(iterator + ": Course ID: " + mark.getCourse().getId() + " - Course Name: "

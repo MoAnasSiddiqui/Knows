@@ -43,7 +43,7 @@ public class ObjectHandling<T> {
         }
     }
 
-    public void readFromFile(ArrayList<T> objectList) {
+    public ArrayList<T> readFromFile(ArrayList<T> objectList) {
         try {
             FileInputStream fis = null;
             fis = new FileInputStream(file);
@@ -59,34 +59,16 @@ public class ObjectHandling<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return objectList;
     }
 
     public void updateFile(ArrayList<T> objectList) {
-        // File newFile = new File(file.getAbsolutePath());
-        // newFile.delete();
+        try {
+            new PrintWriter(file.getAbsolutePath()).close();
+        } catch (Exception e) {
+        }
         for (int i = 0; i < objectList.size(); i++) {
-            if (i != 0) {
-                writeInFile(objectList.get(i));
-            } else {
-                try {
-                    FileOutputStream fos = null;
-                    fos = new FileOutputStream(file, false);
-
-                    if (file.length() == 0) {
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(objectList.get(i));
-                        oos.close();
-                    } else {
-                        MyObjectOutputStream oos = null;
-                        oos = new MyObjectOutputStream(fos);
-                        oos.writeObject(objectList.get(i));
-                        oos.close();
-                    }
-                    fos.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            writeInFile(objectList.get(i));
         }
     }
 }

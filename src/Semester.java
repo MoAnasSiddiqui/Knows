@@ -2,26 +2,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Semester implements Serializable {
-    private ArrayList<Marks> registeredCourses;
+    private ArrayList<Marks> registeredCourseMarks;
 
     Semester() {
-        registeredCourses = new ArrayList<Marks>();
+        registeredCourseMarks = new ArrayList<Marks>();
     }
 
     Semester(ArrayList<Marks> regCourses) {
-        registeredCourses = regCourses;
+        registeredCourseMarks = regCourses;
     }
 
     public void addCourse(Marks course) {
-        registeredCourses.add(course);
+        registeredCourseMarks.add(course);
     }
 
-    public void setRegisteredCourses(ArrayList<Marks> registeredCourses) {
-        this.registeredCourses = registeredCourses;
+    public void setRegisteredCourseMarks(ArrayList<Marks> registeredCourseMarks) {
+        this.registeredCourseMarks = registeredCourseMarks;
     }
 
-    public Marks getMarksObj(Course course) {
-        for (Marks m : registeredCourses) {
+    public Marks getCourseMarks(Course course) {
+        for (Marks m : registeredCourseMarks) {
             if (m.getCourse().getId().compareTo(course.getId()) == 0) {
                 return m;
             }
@@ -29,12 +29,12 @@ public class Semester implements Serializable {
         return null;
     }
 
-    public ArrayList<Marks> getRegisteredCourses() {
-        return registeredCourses;
+    public ArrayList<Marks> getRegisteredCourseMarks() {
+        return registeredCourseMarks;
     }
 
     @Override
     public String toString() {
-        return registeredCourses.get(registeredCourses.size() - 1).toString();
+        return registeredCourseMarks.get(registeredCourseMarks.size() - 1).toString();
     }
 }

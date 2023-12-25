@@ -21,43 +21,41 @@ public class Faculty extends Person implements Serializable {
 
     public void updateAssignmentMarks(Student student, int num, double marks) {
         Semester semester = student.getLastSemester();
-        Marks marksObj = semester.getMarksObj(course);
+        Marks marksObj = semester.getCourseMarks(course);
 
         marksObj.updateAssignment(num, marks);
 
-        Admin.updateStudentFile();
+        Admin.updateFile();
     }
 
     public void updateQuizMarks(Student student, int num, double marks) {
         Semester semester = student.getLastSemester();
-        Marks marksObj = semester.getMarksObj(course);
-
+        Marks marksObj = semester.getCourseMarks(course);
         marksObj.updateQuiz(num, marks);
-        Admin.updateStudentFile();
+        Admin.updateFile();
     }
 
     public void updateLabAssignmentMarks(Student student, double marks) {
         Semester semester = student.getLastSemester();
-        Marks marksObj = semester.getMarksObj(course);
+        Marks marksObj = semester.getCourseMarks(course);
 
         marksObj.updateLabAssignment(marks);
-        Admin.updateStudentFile();
+        Admin.updateFile();
     }
 
     public void updateMidMarks(Student student, int num, double marks) {
         Semester semester = student.getLastSemester();
-        Marks marksObj = semester.getMarksObj(course);
-
+        Marks marksObj = semester.getCourseMarks(course);
         marksObj.updateMid(num, marks);
-        Admin.updateStudentFile();
+        Admin.updateFile();
     }
 
     public void updateTerminalMarks(Student student, int num, double marks) {
         Semester semester = student.getLastSemester();
-        Marks marksObj = semester.getMarksObj(course);
+        Marks marksObj = semester.getCourseMarks(course);
 
         marksObj.updateTerminal(num, marks);
-        Admin.updateStudentFile();
+        Admin.updateFile();
     }
 
     @Override

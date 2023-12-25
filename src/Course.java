@@ -33,7 +33,7 @@ public class Course implements Serializable {
         return null;
     }
 
-    public void registerStudent(Student student) {
+    public void registerStudentInCourse(Student student) {
         registeredStudents.add(student);
     }
 
