@@ -31,25 +31,37 @@ public class Knows {
         System.out.println();
         choice = Display.menu(new String[] { "Login" });
         if (choice == 1) {
-            String username, password;
-            System.out.print("Username: ");
-            username = input.nextLine();
-            for (Admin admin : admins) {
-                if (username.compareTo(admin.getCredential().getUsername()) == 0) {
-                    System.out.print("Password: ");
-                    password = input.nextLine();
-                    if (admin.getCredential().validatePin(password)) {
-                        adminPortal();
-                    } else {
-                        adminPage();
-                    }
-                }
-            }
-            adminPage();
-
+            adminLogin();
         } else {
             mainPage();
         }
+    }
+
+    static void adminLogin() {
+        Display.logo();
+        System.out.println("[Admin Login]");
+        System.out.println("\n");
+        String username, password;
+        System.out.print("Enter Username: ");
+        username = input.nextLine();
+        for (Admin admin : admins) {
+            if (username.compareTo(admin.getCredential().getUsername()) == 0) {
+                System.out.print("Enter Password: ");
+                password = input.nextLine();
+                if (admin.getCredential().validatePin(password)) {
+                    System.out.print("\nLogin successful\n\nPress Enter to continue...");
+                    input.nextLine();
+                    adminPortal();
+                } else {
+                    System.out.print("\nIncorrect Password\n\nPress Enter to to go back...");
+                    input.nextLine();
+                    adminPage();
+                }
+            }
+        }
+        System.out.print("\nCannot find username\n\nPress Enter to to go back...");
+        input.nextLine();
+        adminPage();
     }
 
     static void adminPortal() {
@@ -57,12 +69,15 @@ public class Knows {
         System.out.println("[Admin Portal]");
         System.out.println();
         choice = Display.menu(
-                new String[] { "Register Student", "Resgister Faculty Member", "Register Course", "End Semester" });
+                new String[] { "Register Student", "Register Faculty Member", "Register Course", "End Semester" });
         if (choice == 1) {
-            System.out.println("Provide Student Details");
-            System.out.print("Name: ");
+            Display.logo();
+            System.out.println("[Student Registration]");
+            System.out.println("\n");
+            System.out.println("Provide Student Details\n");
+            System.out.print("Student name: ");
             String name = input.nextLine();
-            System.out.print("Username: ");
+            System.out.print("Student username: ");
             String username = input.nextLine();
             System.out.print("Password: ");
             String password = input.nextLine();
@@ -76,14 +91,18 @@ public class Knows {
             }
 
             Admin.registerStudent(username, password, name, studentCourses);
+            System.out.print(name + "\n successfully registered\n\nPress Enter to continue...");
+            input.nextLine();
             adminPortal();
 
         } else if (choice == 2) {
             Display.logo();
-            System.out.println("Provide Faculty member details");
-            System.out.print("Name: ");
+            System.out.println("[Faculty Registration]");
+            System.out.println("\n");
+            System.out.println("Provide Faculty member details\n");
+            System.out.print("Faculty name: ");
             String name = input.nextLine();
-            System.out.print("Username: ");
+            System.out.print("Faculty username: ");
             String username = input.nextLine();
             System.out.print("Password: ");
             String password = input.nextLine();
@@ -91,10 +110,15 @@ public class Knows {
             Course facultyCourse = chooseCourse();
 
             Admin.registerFaculty(username, password, username, facultyCourse);
+            System.out.print(name + "\n successfully registered\n\nPress Enter to continue...");
+            input.nextLine();
             adminPortal();
 
         } else if (choice == 3) {
-            System.out.println("Provide Course Details");
+            Display.logo();
+            System.out.println("[Course Registration]");
+            System.out.println("\n");
+            System.out.println("Provide Course Details\n");
             System.out.print("Course Name: ");
             String name = input.nextLine();
             System.out.print("Course ID: ");
@@ -107,6 +131,8 @@ public class Knows {
             input.nextLine();
 
             Admin.registerCourse(id, name, theoryHours, labHours);
+            System.out.print(name + "\n successfully registered\n\nPress Enter to continue...");
+            input.nextLine();
             adminPortal();
         } else if (choice == 0) {
             adminPage();
@@ -115,12 +141,12 @@ public class Knows {
 
     private static Course chooseCourse() {
         Display.logo();
-        System.out.println("Choose a course ");
+        System.out.println("\nChoose a course\n");
         ArrayList<Course> courses = Admin.getCourses();
         for (int i = 0; i < courses.size(); i++) {
             System.out.println((i + 1) + ": " + courses.get(i).getName());
         }
-        System.out.println("0: Exit");
+        System.out.println("0: Exit\n");
         choice = Display.chooseOption(courses.size());
         if (choice == 0) {
             return chooseCourse();
@@ -130,15 +156,17 @@ public class Knows {
 
     private static ArrayList<Course> chooseCourse(ArrayList<Course> studentCourses) {
         Display.logo();
-        System.out.println("Choose a course ");
+        System.out.println("Choose a course\n");
         ArrayList<Course> courses = Admin.getCourses();
         for (int i = 0; i < courses.size(); i++) {
             System.out.println((i + 1) + ": " + courses.get(i).getName());
         }
-        System.out.println("0: Exit");
+        System.out.println("0: Exit\n");
         choice = Display.chooseOption(courses.size());
         if (choice != 0) {
             studentCourses.add(courses.get(choice - 1));
+            System.out.print("\nStudent has successfully registered this course\n\nPress Enter to continue...");
+            input.nextLine();
             return chooseCourse(studentCourses);
         }
         return studentCourses;
@@ -159,26 +187,37 @@ public class Knows {
         Display.logo();
         choice = Display.menu(new String[] { "Login" });
         if (choice == 1) {
-            String username, password;
-            System.out.print("Username: ");
-            username = input.nextLine();
-            ArrayList<Student> students = Admin.getStudents();
-            for (Student student : students) {
-                if (username.compareTo(student.getCredential().getUsername()) == 0) {
-                    password = input.nextLine();
-                    if (student.getCredential().validatePin(password)) {
-                        studentPortal(student);
-                    } else {
-                        studentPage();
-                    }
-                } else {
-                    studentPage();
-                }
-            }
-            studentPage();
+            studentLogin();
         } else {
             mainPage();
         }
+    }
+
+    static void studentLogin() {
+        Display.logo();
+        System.out.println("[Student Login]");
+        System.out.println("\n");
+        String username, password;
+        System.out.print("Enter Username: ");
+        username = input.nextLine();
+        for (Student student : Admin.getStudents()) {
+            if (username.compareTo(student.getCredential().getUsername()) == 0) {
+                System.out.print("Enter Password: ");
+                password = input.nextLine();
+                if (student.getCredential().validatePin(password)) {
+                    System.out.print("\nLogin successful\n\nPress Enter to continue...");
+                    input.nextLine();
+                    studentPortal(student);
+                } else {
+                    System.out.print("\nIncorrect Password\n\nPress Enter to to go back...");
+                    input.nextLine();
+                    studentPage();
+                }
+            }
+        }
+        System.out.print("\nCannot find username\n\nPress Enter to to go back...");
+        input.nextLine();
+        studentPage();
     }
 
     static void studentPortal(Student student) {

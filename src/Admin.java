@@ -20,7 +20,6 @@ public class Admin extends Person {
 
   public static void registerStudent(String username, String password, String name, Course[] registeredCourses) {
     Student newStudent = new Student(username, password, name);
-    System.out.println("hello");
     ArrayList<Marks> marksObjs = new ArrayList<>();
     for (Course c : registeredCourses) {
       marksObjs.add(new Marks(c));
