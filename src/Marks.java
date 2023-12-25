@@ -49,7 +49,8 @@ public class Marks {
   @Override
   public String toString() {
     String message = course.toString();
-    message += "Assignment: \n";
+    message = message + "Theory Details:\n\n";
+    message += "Assignments: \n";
     for (int i = 0; i < 4; i++) {
       if (assignments[i] != -1) {
         message = message + "Assignment " + (i + 1) + ": " + assignments[i] + "\n";
@@ -57,7 +58,7 @@ public class Marks {
         message = message + "Assignment " + (i + 1) + ": null" + "\n";
       }
     }
-    message = message + "Quiz: \n";
+    message = message + "\nQuizes: \n";
     for (int i = 0; i < 4; i++) {
       if (assignments[i] != -1) {
         message = message + "Quiz " + (i + 1) + ": " + assignments[i] + "\n";
@@ -65,17 +66,18 @@ public class Marks {
         message = message + "Quiz " + (i + 1) + ": null" + "\n";
       }
     }
-    message = message + "Theory Mid:\n";
     if (mids[0] != -1) {
-      message = message + "Theory Mid: " + mids[0] + "\n";
+      message = message + "\nTheory Mid: " + mids[0] + "\n";
     } else {
-      message = message + "Theory Mid: null\n";
+      message = message + "\nTheory Mid: null\n";
     }
-    message = message + "Theory Terminal: ";
     if (terminals[0] != -1) {
-      message = message + "Theory Terminal: " + terminals[0] + "\n";
+      message = message + "\nTheory Terminal: " + terminals[0] + "\n";
+    } else {
+      message = message + "\nTheory Terminal: null\n";
     }
     if (this.course.getLabHours() != 0) {
+      message = message + "\nLab Details:\n\n";
       if (labAssignments[1] != 0) {
         message += "Lab Assignments: " + (labAssignments[0] / labAssignments[1]) + "\n";
       } else {

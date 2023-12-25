@@ -20,8 +20,6 @@ public class Knows {
             facultyPage();
         } else if (choice == 3) {
             studentPage();
-        } else {
-            return;
         }
     }
 
@@ -91,7 +89,7 @@ public class Knows {
             }
 
             Admin.registerStudent(username, password, name, studentCourses);
-            System.out.print(name + "\n successfully registered\n\nPress Enter to continue...");
+            System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();
 
@@ -110,7 +108,7 @@ public class Knows {
             Course facultyCourse = chooseCourse();
 
             Admin.registerFaculty(username, password, username, facultyCourse);
-            System.out.print(name + "\n successfully registered\n\nPress Enter to continue...");
+            System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();
 
@@ -131,7 +129,7 @@ public class Knows {
             input.nextLine();
 
             Admin.registerCourse(id, name, theoryHours, labHours);
-            System.out.print(name + "\n successfully registered\n\nPress Enter to continue...");
+            System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();
         } else if (choice == 0) {
@@ -165,7 +163,8 @@ public class Knows {
         choice = Display.chooseOption(courses.size());
         if (choice != 0) {
             studentCourses.add(courses.get(choice - 1));
-            System.out.print("\nStudent has successfully registered this course\n\nPress Enter to continue...");
+            System.out.print("\nSuccessfully registered " + courses.get(choice - 1).getName()
+                    + "\n\nPress Enter to continue...");
             input.nextLine();
             return chooseCourse(studentCourses);
         }
@@ -224,8 +223,14 @@ public class Knows {
         Display.logo();
         choice = Display.menu(new String[] { "Student details", "Course Summary" });
         if (choice == 1) {
+            Display.logo();
+            System.out.println("[Student details]");
+            System.out.println("\n");
             System.out.print("Name: " + student.getName());
-            System.out.println("Username: " + student.getCredential().getUsername());
+            System.out.println("\nUsername: " + student.getCredential().getUsername());
+            System.out.print("\nPress Enter to go back...");
+            input.nextLine();
+            studentPortal(student);
         } else if (choice == 2) {
             semesterSummary(student);
         } else {
@@ -234,13 +239,19 @@ public class Knows {
     }
 
     static void semesterSummary(Student student) {
+        Display.logo();
+        System.out.println("[Current Semester Summary]");
+        System.out.println("\n");
         ArrayList<Marks> registeredCourses = student.getSemesters().get((student.getSemesters().size()) - 1)
                 .getRegisteredCourses();
+        int iterator = 1;
         for (Marks mark : registeredCourses) {
-            System.out.println(mark.getCourse().getId() + ": " + mark.getCourse().getName());
+            System.out.println(iterator + ": Course ID: " + mark.getCourse().getId() + " - Course Name: "
+                    + mark.getCourse().getName());
+            iterator++;
         }
-        System.out.println("0: Exit");
-        choice = Display.chooseOption(registeredCourses.size() - 1);
+        System.out.println("0: Exit\n");
+        choice = Display.chooseOption(registeredCourses.size());
         if (choice == 0) {
             studentPortal(student);
         } else {
@@ -250,11 +261,11 @@ public class Knows {
 
     static void courseSummary(Student student, Marks mark) {
         Display.logo();
+        System.out.println("[" + mark.getCourse().getName() + " Summary]");
+        System.out.println("\n");
         System.out.println(mark.toString());
-        choice = Display.menu(new String[] {});
-        if (choice == 0) {
-            semesterSummary(student);
-        }
+        System.out.print("\nPress Enter to go back...");
+        input.nextLine();
+        semesterSummary(student);
     }
-
 }
