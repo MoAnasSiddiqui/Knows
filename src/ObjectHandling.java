@@ -1,5 +1,19 @@
 import java.io.*;
 
+class MyObjectOutputStream extends ObjectOutputStream {
+    MyObjectOutputStream() throws IOException {
+        super();
+    }
+
+    MyObjectOutputStream(OutputStream o) throws IOException {
+        super(o);
+    }
+
+    public void writeStreamHeader() throws IOException {
+        return;
+    }
+}
+
 public class ObjectHandling<T> {
     private File file;
 
@@ -17,7 +31,6 @@ public class ObjectHandling<T> {
                 oos.writeObject(object);
                 oos.close();
             } else {
-
                 MyObjectOutputStream oos = null;
                 oos = new MyObjectOutputStream(fos);
                 oos.writeObject(object);
