@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Admin extends Person implements Serializable {
   private static ArrayList<Student> students;
@@ -57,14 +58,16 @@ public class Admin extends Person implements Serializable {
 
   public static void registerStudentCourses(Student student, ArrayList<Course> registeredCourses) {
     ArrayList<Marks> courseMarks = new ArrayList<>();
+    // System.out.println(registeredCourses);
     for (Course course : registeredCourses) {
-      course.registerStudentInCourse(student);
       courseMarks.add(new Marks(course));
+      course.registerStudentInCourse(student);
+
     }
     student.getLastSemester().addRegisteredCourseMarks(courseMarks);
 
     // Overwrite the whole file to update the student and course objects in the file
-    updateData();
+    // updateData();
   }
 
   public static void registerFaculty(String username, String password, String name, Course course) {
@@ -96,8 +99,8 @@ public class Admin extends Person implements Serializable {
   }
 
   public static void updateData() {
-    studentFile.updateFile(students);
     courseFile.updateFile(courses);
+    studentFile.updateFile(students);
     facultyFile.updateFile(facultys);
   }
 

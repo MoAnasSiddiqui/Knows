@@ -72,7 +72,7 @@ public class Knows implements Serializable {
         System.out.println();
         choice = Display.menu(
                 new String[] { "Register Student", "Register Faculty Member", "Register Course for KNOWS",
-                        "Register Course for Student", "End Semester" });
+                        "Register Course for Student" });
         if (choice == 1) {
             Display.logo();
             System.out.println("[Student Registration]");
@@ -144,8 +144,8 @@ public class Knows implements Serializable {
             } else {
                 ArrayList<Course> studentCourses = new ArrayList<>();
                 Student student = Admin.getStudents().get(choice - 1);
-                ArrayList<Course> courses = chooseCourse(studentCourses);
-                Admin.registerStudentCourses(student, courses);
+                studentCourses = chooseCourse(studentCourses);
+                Admin.registerStudentCourses(student, studentCourses);
                 adminPortal();
             }
         } else {
@@ -184,10 +184,8 @@ public class Knows implements Serializable {
                     + "\n\nPress Enter to continue...");
             input.nextLine();
             return chooseCourse(studentCourses);
-        } else {
-            return studentCourses;
         }
-
+        return studentCourses;
     }
 
     static void facultyPage() {
@@ -239,67 +237,78 @@ public class Knows implements Serializable {
             facultyPortal(faculty);
         } else if (choice == 2) {
             ArrayList<Student> registeredStudents = faculty.getCourse().getRegisteredStudents();
-            String[] studentNames = new String[registeredStudents.size()];
-            for (int i = 0; i < studentNames.length; i++) {
-                studentNames[i] = registeredStudents.get(i).getCredential().getUsername();
-            }
-            choice = Display.menu(studentNames);
-            System.out.println("Choose the student you want to add marks of from the above students list.");
-            if (choice != 0) {
-                Student selectedStudent = registeredStudents.get(choice - 1);
-                Display.logo();
-                choice = Display.menu(new String[] { "Add Assigment Marks", "Add Quiz Marks",
-                        "Add Lab Assignment Marks", "Add Mid Marks", "Add Terminal Marks" });
-                if (choice == 1) {
-                    System.out.print("Enter Assignment Number: ");
-                    int num = input.nextInt();
-                    input.nextLine();
-                    System.out.print("Enter Assignment Marks: ");
-                    double marks = input.nextDouble();
-                    input.nextLine();
-                    faculty.updateAssignmentMarks(selectedStudent, num, marks);
-                    System.out.print("Assignment Marks successfully added");
-                } else if (choice == 2) {
-                    System.out.print("Enter Quiz Number: ");
-                    int num = input.nextInt();
-                    input.nextLine();
-                    System.out.print("Enter Quiz Marks: ");
-                    double marks = input.nextDouble();
-                    input.nextLine();
-                    faculty.updateQuizMarks(selectedStudent, num, marks);
-                    System.out.print("Quiz Marks successfully added");
-                } else if (choice == 3) {
-                    System.out.print("Enter Lab Assignment Marks: ");
-                    double marks = input.nextDouble();
-                    input.nextLine();
-                    faculty.updateLabAssignmentMarks(selectedStudent, marks);
-                    System.out.print("Lab Assignment Marks successfully added");
-                } else if (choice == 4) {
-                    System.out.print("Enter 0 for Theory Mid and 1 for Lab Mid: ");
-                    int num = input.nextInt();
-                    input.nextLine();
-                    System.out.print("Enter Mid Marks: ");
-                    double marks = input.nextDouble();
-                    input.nextLine();
-                    faculty.updateMidMarks(selectedStudent, num, marks);
-                    System.out.print("Mid Marks successfully added");
-                } else if (choice == 5) {
-                    System.out.print("Enter 0 for Theory Terminal and 1 for Lab Terminal: ");
-                    int num = input.nextInt();
-                    input.nextLine();
-                    System.out.print("Enter Terminal Marks: ");
-                    double marks = input.nextDouble();
-                    input.nextLine();
-                    faculty.updateTerminalMarks(selectedStudent, num, marks);
-                    System.out.print("Terminal Marks successfully added");
-                }
-                System.out.print("\nPress Enter to go back...");
+            System.out.println(faculty.getCourse().getRegisteredStudents());
+            if (registeredStudents.size() == 0) {
+                System.out.print("\nNo registered students yet. Press Enter to go back...");
                 input.nextLine();
                 facultyPortal(faculty);
+            } else {
+                for (int i = 0; i < registeredStudents.size(); i++) {
+                    System.out.println(i + 1 + ": " + registeredStudents.get(i).getName());
+                }
             }
+            choice = Display.chooseOption(registeredStudents.size());
+            if (choice != 0) {
+                addStudentMarks(faculty, registeredStudents.get(choice - 1));
+            }
+            facultyPortal(faculty);
         } else {
             facultyPage();
         }
+    }
+
+    static void addStudentMarks(Faculty faculty, Student selectedStudent) {
+        Display.logo();
+        choice = Display.menu(new String[] { "Add Assigment Marks", "Add Quiz Marks",
+                "Add Lab Assignment Marks", "Add Mid Marks", "Add Terminal Marks" });
+        if (choice == 1) {
+            System.out.print("Enter Assignment Number: ");
+            int num = input.nextInt();
+            input.nextLine();
+            System.out.print("Enter Assignment Marks: ");
+            double marks = input.nextDouble();
+            input.nextLine();
+            faculty.updateAssignmentMarks(selectedStudent, num, marks);
+            System.out.print("Assignment Marks successfully added");
+        } else if (choice == 2) {
+            System.out.print("Enter Quiz Number: ");
+            int num = input.nextInt();
+            input.nextLine();
+            System.out.print("Enter Quiz Marks: ");
+            double marks = input.nextDouble();
+            input.nextLine();
+            faculty.updateQuizMarks(selectedStudent, num, marks);
+            System.out.print("Quiz Marks successfully added");
+        } else if (choice == 3) {
+            System.out.print("Enter Lab Assignment Marks: ");
+            double marks = input.nextDouble();
+            input.nextLine();
+            faculty.updateLabAssignmentMarks(selectedStudent, marks);
+            System.out.print("Lab Assignment Marks successfully added");
+        } else if (choice == 4) {
+            System.out.print("Enter 0 for Theory Mid and 1 for Lab Mid: ");
+            int num = input.nextInt();
+            input.nextLine();
+            System.out.print("Enter Mid Marks: ");
+            double marks = input.nextDouble();
+            input.nextLine();
+            faculty.updateMidMarks(selectedStudent, num, marks);
+            System.out.print("Mid Marks successfully added");
+        } else if (choice == 5) {
+            System.out.print("Enter 0 for Theory Terminal and 1 for Lab Terminal: ");
+            int num = input.nextInt();
+            input.nextLine();
+            System.out.print("Enter Terminal Marks: ");
+            double marks = input.nextDouble();
+            input.nextLine();
+            faculty.updateTerminalMarks(selectedStudent, num, marks);
+            System.out.print("Terminal Marks successfully added");
+        } else {
+            return;
+        }
+        System.out.print("\nPress Enter to continue...");
+        input.nextLine();
+        addStudentMarks(faculty, selectedStudent);
     }
 
     static void studentPage() {
@@ -362,8 +371,7 @@ public class Knows implements Serializable {
         Display.logo();
         System.out.println("[Current Semester Summary]");
         System.out.println("\n");
-        ArrayList<Marks> registeredCourses = student.getSemesters().get((student.getSemesters().size()) - 1)
-                .getRegisteredCourseMarks();
+        ArrayList<Marks> registeredCourses = student.getLastSemester().getRegisteredCourseMarks();
         int iterator = 1;
         for (Marks mark : registeredCourses) {
             System.out.println(iterator + ": Course ID: " + mark.getCourse().getId() + " - Course Name: "

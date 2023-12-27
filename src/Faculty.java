@@ -64,7 +64,7 @@ public class Faculty extends Person implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() + " Course: " + this.course.getName();
     }
 
 }

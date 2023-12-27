@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Course implements Serializable {
     private String id;
@@ -34,7 +35,8 @@ public class Course implements Serializable {
     }
 
     public void registerStudentInCourse(Student student) {
-        registeredStudents.add(student);
+        this.registeredStudents.add(student);
+
     }
 
     public void setId(String id) {
@@ -72,6 +74,7 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "ID: " + this.getId() + " Name: " + this.getName() + "\nTheory Hours: " + this.getTheoryHours()
-                + " Lab Hours: " + this.getLabHours() + "\n";
+                + " Lab Hours: " + this.getLabHours() + "\n" + "Registered Students: " + this.getRegisteredStudents()
+                + "\n";
     }
 }
