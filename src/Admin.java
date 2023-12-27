@@ -25,6 +25,22 @@ public class Admin extends Person implements Serializable {
     students = studentFile.readFromFile(students);
     facultys = facultyFile.readFromFile(facultys);
     courses = courseFile.readFromFile(courses);
+    for (Faculty f : facultys) {
+      for (Course c : courses) {
+        if (f.getCourse().getId().compareTo(c.getId()) == 0) {
+          f.setCourse(c);
+        }
+      }
+    }
+    for (Student s : students) {
+      for (Marks m : s.getLastSemester().getRegisteredCourseMarks()) {
+        for (Course c : courses) {
+          if (m.getCourse().getId().compareTo(c.getId()) == 0) {
+            m.setCourse(c);
+          }
+        }
+      }
+    }
     System.out.println(students);
     System.out.println("\n\n");
     System.out.println(facultys);
@@ -67,7 +83,7 @@ public class Admin extends Person implements Serializable {
     student.getLastSemester().addRegisteredCourseMarks(courseMarks);
 
     // Overwrite the whole file to update the student and course objects in the file
-    // updateData();
+    updateData();
   }
 
   public static void registerFaculty(String username, String password, String name, Course course) {

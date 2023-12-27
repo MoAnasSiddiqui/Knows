@@ -46,6 +46,30 @@ public class Marks implements Serializable {
     return course;
   }
 
+  public void setCourse(Course course) {
+    this.course = course;
+  }
+
+  public double[] getAssignments() {
+    return assignments;
+  }
+
+  public double[] getLabAssignments() {
+    return labAssignments;
+  }
+
+  public double[] getMids() {
+    return mids;
+  }
+
+  public double[] getQuizes() {
+    return quizes;
+  }
+
+  public double[] getTerminals() {
+    return terminals;
+  }
+
   @Override
   public String toString() {
     String message = course.toString();

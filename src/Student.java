@@ -28,6 +28,10 @@ public class Student extends Person implements Serializable {
         return semesters.get(semesters.size() - 1);
     }
 
+    public void setSemesters(ArrayList<Semester> semesters) {
+        this.semesters = semesters;
+    }
+
     @Override
     public String toString() {
         return super.toString();
