@@ -30,6 +30,6 @@ public abstract class Person implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Username: %s\nName: %s", credential.getUsername(), name);
+        return "Username: " + this.credential.getUsername() + " Name: " + name + " ";
     }
 }

@@ -27,4 +27,9 @@ public class Student extends Person implements Serializable {
         }
         return semesters.get(semesters.size() - 1);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

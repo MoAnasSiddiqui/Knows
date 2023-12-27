@@ -104,7 +104,7 @@ public class Knows implements Serializable {
 
             Course facultyCourse = chooseCourse();
 
-            Admin.registerFaculty(username, password, username, facultyCourse);
+            Admin.registerFaculty(username, password, name, facultyCourse);
             System.out.print("\n" + name + " successfully registered\n\nPress Enter to continue...");
             input.nextLine();
             adminPortal();

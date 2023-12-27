@@ -72,6 +72,6 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "ID: " + this.getId() + " Name: " + this.getName() + "\nTheory Hours: " + this.getTheoryHours()
-                + " Lab Hours: " + this.getLabHours() + "\n\n";
+                + " Lab Hours: " + this.getLabHours() + "\n";
     }
 }

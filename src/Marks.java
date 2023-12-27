@@ -60,7 +60,7 @@ public class Marks implements Serializable {
     }
     message = message + "\nQuizes: \n";
     for (int i = 0; i < 4; i++) {
-      if (assignments[i] != -1) {
+      if (quizes[i] != -1) {
         message = message + "Quiz " + (i + 1) + ": " + quizes[i] + "\n";
       } else {
         message = message + "Quiz " + (i + 1) + ": null" + "\n";

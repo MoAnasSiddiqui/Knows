@@ -25,14 +25,15 @@ public class Faculty extends Person implements Serializable {
 
         marksObj.updateAssignment(num, marks);
 
-        Admin.updateFile();
+        // Admin.updateData();
     }
 
     public void updateQuizMarks(Student student, int num, double marks) {
         Semester semester = student.getLastSemester();
         Marks marksObj = semester.getCourseMarks(course);
         marksObj.updateQuiz(num, marks);
-        Admin.updateFile();
+
+        // Admin.updateData();
     }
 
     public void updateLabAssignmentMarks(Student student, double marks) {
@@ -40,14 +41,16 @@ public class Faculty extends Person implements Serializable {
         Marks marksObj = semester.getCourseMarks(course);
 
         marksObj.updateLabAssignment(marks);
-        Admin.updateFile();
+
+        // Admin.updateData();
     }
 
     public void updateMidMarks(Student student, int num, double marks) {
         Semester semester = student.getLastSemester();
         Marks marksObj = semester.getCourseMarks(course);
         marksObj.updateMid(num, marks);
-        Admin.updateFile();
+
+        // Admin.updateData();
     }
 
     public void updateTerminalMarks(Student student, int num, double marks) {
@@ -55,12 +58,13 @@ public class Faculty extends Person implements Serializable {
         Marks marksObj = semester.getCourseMarks(course);
 
         marksObj.updateTerminal(num, marks);
-        Admin.updateFile();
+
+        // Admin.updateData();
     }
 
     @Override
     public String toString() {
-        return String.format("%s\n%s", super.toString(), course.toString());
+        return super.toString();
     }
 
 }

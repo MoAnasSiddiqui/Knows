@@ -45,5 +45,4 @@ public class Credential implements Serializable {
     public String getUsername() {
         return username;
     }
-
 }

@@ -16,8 +16,10 @@ public class Semester implements Serializable {
         registeredCourseMarks.add(course);
     }
 
-    public void setRegisteredCourseMarks(ArrayList<Marks> registeredCourseMarks) {
-        this.registeredCourseMarks = registeredCourseMarks;
+    public void addRegisteredCourseMarks(ArrayList<Marks> registeredCourseMarks) {
+        for (Marks m : registeredCourseMarks) {
+            this.registeredCourseMarks.add(m);
+        }
     }
 
     public Marks getCourseMarks(Course course) {
