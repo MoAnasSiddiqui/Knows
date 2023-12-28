@@ -18,7 +18,7 @@ public class KnowsGUI {
     }
 
     private static void initializeGUI() {
-        frame = new JFrame("KNOWS Console Program");
+        frame = new JFrame("KNOWS");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -26,28 +26,6 @@ public class KnowsGUI {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 1));
         frame.add(mainPanel, BorderLayout.CENTER);
-
-        userTypeComboBox = new JComboBox<>(new String[] { "Admin", "Faculty", "Student" });
-        mainPanel.add(userTypeComboBox);
-
-        JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(e -> {
-            String selectedUserType = (String) userTypeComboBox.getSelectedItem();
-            if (selectedUserType != null) {
-                switch (selectedUserType) {
-                    case "Admin":
-                        showAdminPage();
-                        break;
-                    case "Faculty":
-                        showFacultyPage();
-                        break;
-                    case "Student":
-                        showStudentPage();
-                        break;
-                }
-            }
-        });
-        mainPanel.add(loginButton);
 
         frame.setVisible(true);
     }
