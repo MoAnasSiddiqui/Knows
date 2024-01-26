@@ -6,9 +6,13 @@ public class Admin extends Person implements Serializable {
   private static ArrayList<Student> students;
   private static ArrayList<Faculty> facultys;
   private static ArrayList<Course> courses;
+  private static ArrayList<ArrayList<Semester>> studentSemesters;
+  private static ArrayList<ArrayList<Marks>> semesterMarks;
   private static ObjectHandling<Student> studentFile;
   private static ObjectHandling<Faculty> facultyFile;
   private static ObjectHandling<Course> courseFile;
+  private static ObjectHandling<ArrayList<Semester>> semesterFile;
+  private static ObjectHandling<ArrayList<Marks>> marksFile;
 
   Admin() {
   }
@@ -18,13 +22,46 @@ public class Admin extends Person implements Serializable {
     students = new ArrayList<>();
     facultys = new ArrayList<>();
     courses = new ArrayList<>();
+    studentSemesters = new ArrayList<>();
+    semesterMarks = new ArrayList<>();
     studentFile = new ObjectHandling<>("database/students.ser");
     facultyFile = new ObjectHandling<>("database/facultys.ser");
     courseFile = new ObjectHandling<>("database/courses.ser");
+    semesterFile = new ObjectHandling<>("database/semester.ser");
+    marksFile = new ObjectHandling<>("database/marks.ser");
 
-    students = studentFile.readFromFile(students);
-    facultys = facultyFile.readFromFile(facultys);
-    courses = courseFile.readFromFile(courses);
+    if (studentFile.exists())
+      students = studentFile.readFromFile(students);
+    if (facultyFile.exists())
+      facultys = facultyFile.readFromFile(facultys);
+    if (courseFile.exists())
+      courses = courseFile.readFromFile(courses);
+    if (semesterFile.exists())
+      studentSemesters = semesterFile.readFromFile(studentSemesters);
+    if (marksFile.exists())
+      semesterMarks = marksFile.readFromFile(semesterMarks);
+
+    for (int i = 0; i < studentSemesters.size(); i++) {
+      ArrayList<Semester> sems = studentSemesters.get(i);
+      Semester sem = sems.get(sems.size() - 1);
+      if (semesterMarks.size() > i)
+        sem.setRegisteredCourseMarks(semesterMarks.get(i));
+
+      students.get(i).setSemesters(sems);
+    }
+
+    for (Course c : courses) {
+      ArrayList<Student> rstudents = new ArrayList<>();
+      for (Student rs : c.getRegisteredStudents()) {
+        for (Student s : students) {
+          if (s.getCredential().getUsername().compareTo(rs.getCredential().getUsername()) == 0) {
+            rstudents.add(s);
+          }
+        }
+      }
+      c.setRegisteredStudents(rstudents);
+    }
+
     for (Faculty f : facultys) {
       for (Course c : courses) {
         if (f.getCourse().getId().compareTo(c.getId()) == 0) {
@@ -32,15 +69,7 @@ public class Admin extends Person implements Serializable {
         }
       }
     }
-    for (Student s : students) {
-      for (Marks m : s.getLastSemester().getRegisteredCourseMarks()) {
-        for (Course c : courses) {
-          if (m.getCourse().getId().compareTo(c.getId()) == 0) {
-            m.setCourse(c);
-          }
-        }
-      }
-    }
+
     System.out.println(students);
     System.out.println("\n\n");
     System.out.println(facultys);
@@ -48,18 +77,6 @@ public class Admin extends Person implements Serializable {
     System.out.println(courses);
     System.out.println("\n\n");
 
-    // registerStudent("anas", "anas", "anas");
-    // registerStudent("asfer", "asfer", "asfer");
-    // registerKNOWSCourse("oop", "oop", 3, 1);
-    // registerKNOWSCourse("pst", "pst", 3, 0);
-    // registerFaculty("sajida", "sajida", "sajida", courses.get(0));
-    // registerFaculty("rabia", "rabia", "rabia", courses.get(1));
-    // ArrayList<Course> temp0 = new ArrayList<>();
-    // temp0.add(courses.get(0));
-    // registerStudentCourses(students.get(0), temp0);
-    // ArrayList<Course> temp1 = new ArrayList<>();
-    // temp1.add(courses.get(1));
-    // registerStudentCourses(students.get(1), temp1);
   }
 
   public static void registerStudent(String username, String password, String name) {
@@ -69,6 +86,7 @@ public class Admin extends Person implements Serializable {
     students.add(newStudent);
 
     // Write in file
+    updateSemesterFile();
     studentFile.writeInFile(newStudent);
   }
 
@@ -76,13 +94,15 @@ public class Admin extends Person implements Serializable {
     ArrayList<Marks> courseMarks = new ArrayList<>();
     // System.out.println(registeredCourses);
     for (Course course : registeredCourses) {
-      courseMarks.add(new Marks(course));
+      courseMarks.add(new Marks(course.getId()));
       course.registerStudentInCourse(student);
 
     }
     student.getLastSemester().addRegisteredCourseMarks(courseMarks);
 
     // Overwrite the whole file to update the student and course objects in the file
+    updateSemesterFile();
+    updateMarksFile();
     updateData();
   }
 
@@ -112,6 +132,30 @@ public class Admin extends Person implements Serializable {
 
   public static ArrayList<Faculty> getFaculty() {
     return facultys;
+  }
+
+  public static Course getCourseById(String id) {
+    for (Course c : courses) {
+      if (c.getId().compareTo(id) == 0)
+        return c;
+    }
+    return null;
+  }
+
+  public static void updateSemesterFile() {
+    studentSemesters = new ArrayList<>();
+    for (Student s : students) {
+      studentSemesters.add(s.getSemesters());
+    }
+    semesterFile.updateFile(studentSemesters);
+  }
+
+  public static void updateMarksFile() {
+    semesterMarks = new ArrayList<>();
+    for (ArrayList<Semester> sems : studentSemesters) {
+      semesterMarks.add(sems.get(sems.size() - 1).getRegisteredCourseMarks());
+    }
+    marksFile.updateFile(semesterMarks);
   }
 
   public static void updateData() {

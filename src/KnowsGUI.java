@@ -493,6 +493,9 @@ public class KnowsGUI {
         JButton addMarksButton = new JButton("Add Marks");
         addMarksButton.addActionListener(e -> showAddMarks(faculty));
 
+        JButton showMarksButton = new JButton("Show Marks");
+        showMarksButton.addActionListener(e -> showStudentMarks(faculty));
+
         // Create a "Logout" button
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> showMainPage());
@@ -501,7 +504,52 @@ public class KnowsGUI {
         mainPanel.add(new JLabel("Faculty Portal"));
         mainPanel.add(viewDetailsButton);
         mainPanel.add(addMarksButton);
+        mainPanel.add(showMarksButton);
         mainPanel.add(logoutButton); // Adding the "Logout" button
+
+        // Refresh the frame to reflect the changes
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private static void showStudentMarks(Faculty faculty) {
+        // Clear existing components from the main panel
+        mainPanel.removeAll();
+
+        // Display a combo box with student usernames
+        ArrayList<Student> registeredStudents = faculty.getCourse().getRegisteredStudents();
+        String[] studentUsernames = registeredStudents.stream().map(student -> student.getCredential().getUsername())
+                .toArray(String[]::new);
+        JComboBox<String> studentComboBox = new JComboBox<>(studentUsernames);
+
+        // Create a "Select" button
+        JButton selectButton = new JButton("Select");
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedStudentIndex = studentComboBox.getSelectedIndex();
+                if (selectedStudentIndex != -1) {
+                    Marks courseMarks = new Marks();
+                    Student selectedStudent = registeredStudents.get(selectedStudentIndex);
+                    for (Marks m : selectedStudent.getLastSemester().getRegisteredCourseMarks()) {
+                        if (m.getCourseId().compareTo(faculty.getCourse().getId()) == 0) {
+                            courseMarks = m;
+                        }
+                    }
+                    showCourseSummary(selectedStudent, courseMarks);
+                }
+            }
+        });
+
+        // Create a "Back" button
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> facultyPortal(faculty));
+
+        // Add components to the main panel
+        mainPanel.add(new JLabel("Select a student:"));
+        mainPanel.add(studentComboBox);
+        mainPanel.add(selectButton);
+        mainPanel.add(backButton); // Adding the "Back" button
 
         // Refresh the frame to reflect the changes
         frame.revalidate();
@@ -1005,7 +1053,7 @@ public class KnowsGUI {
             // Create a combo box with course names
             JComboBox<String> courseComboBox = new JComboBox<>();
             for (Marks marks : registeredCourses) {
-                courseComboBox.addItem(marks.getCourse().getName());
+                courseComboBox.addItem(Admin.getCourseById(marks.getCourseId()).getName());
             }
             mainPanel.add(courseComboBox);
 
@@ -1020,7 +1068,7 @@ public class KnowsGUI {
                     // Find the corresponding course marks object
                     Marks selectedCourseMarks = null;
                     for (Marks marks : registeredCourses) {
-                        if (marks.getCourse().getName().equals(selectedCourseName)) {
+                        if (Admin.getCourseById(marks.getCourseId()).getName().equals(selectedCourseName)) {
                             selectedCourseMarks = marks;
                             break;
                         }
@@ -1055,7 +1103,7 @@ public class KnowsGUI {
         mainPanel.setLayout(new GridLayout(0, 1));
 
         // Display course summary
-        mainPanel.add(new JLabel("Course Summary for " + courseMarks.getCourse().getName()));
+        mainPanel.add(new JLabel("Course Summary for " + Admin.getCourseById(courseMarks.getCourseId()).getName()));
 
         // Display Assignments
         mainPanel.add(new JLabel("Assignments:"));

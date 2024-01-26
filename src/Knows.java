@@ -374,8 +374,8 @@ public class Knows implements Serializable {
         ArrayList<Marks> registeredCourses = student.getLastSemester().getRegisteredCourseMarks();
         int iterator = 1;
         for (Marks mark : registeredCourses) {
-            System.out.println(iterator + ": Course ID: " + mark.getCourse().getId() + " - Course Name: "
-                    + mark.getCourse().getName());
+            System.out.println(iterator + ": Course ID: " + mark.getCourseId() + " - Course Name: "
+                    + Admin.getCourseById(mark.getCourseId()).getName());
             iterator++;
         }
         System.out.println("0: Exit\n");
@@ -389,7 +389,7 @@ public class Knows implements Serializable {
 
     static void courseSummary(Student student, Marks mark) {
         Display.logo();
-        System.out.println("[" + mark.getCourse().getName() + " Summary]");
+        System.out.println("[" + Admin.getCourseById(mark.getCourseId()).getName() + " Summary]");
         System.out.println("\n");
         System.out.println(mark.toString());
         System.out.print("\nPress Enter to go back...");

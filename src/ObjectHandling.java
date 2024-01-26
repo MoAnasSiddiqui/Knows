@@ -22,6 +22,10 @@ public class ObjectHandling<T> {
         file = new File(fileName);
     }
 
+    public boolean exists() {
+        return file.exists();
+    }
+
     public void writeInFile(T object) {
         try {
             FileOutputStream fos = null;

@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class Marks implements Serializable {
-  private Course course;
+  private String courseId;
   private double[] assignments;
   private double[] quizes;
   private double[] labAssignments;
@@ -16,9 +16,9 @@ public class Marks implements Serializable {
     terminals = new double[] { -1, -1 };
   }
 
-  public Marks(Course course) {
+  public Marks(String courseId) {
     this();
-    this.course = course;
+    this.courseId = courseId;
   }
 
   public void updateAssignment(int place, double marks) {
@@ -42,12 +42,12 @@ public class Marks implements Serializable {
     terminals[place] = marks;
   }
 
-  public Course getCourse() {
-    return course;
+  public String getCourseId() {
+    return courseId;
   }
 
-  public void setCourse(Course course) {
-    this.course = course;
+  public void setCourseId(String courseId) {
+    this.courseId = courseId;
   }
 
   public double[] getAssignments() {
@@ -72,7 +72,7 @@ public class Marks implements Serializable {
 
   @Override
   public String toString() {
-    String message = course.toString();
+    String message = Admin.getCourseById(courseId).toString();
     message = message + "Theory Details:\n\n";
     message += "Assignments: \n";
     for (int i = 0; i < 4; i++) {
@@ -100,7 +100,7 @@ public class Marks implements Serializable {
     } else {
       message = message + "\nTheory Terminal: null\n";
     }
-    if (this.course.getLabHours() != 0) {
+    if (Admin.getCourseById(courseId).getLabHours() != 0) {
       message = message + "\nLab Details:\n\n";
       if (labAssignments[1] != 0) {
         message += "Lab Assignments: " + (labAssignments[0] / labAssignments[1]) + "\n";

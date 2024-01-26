@@ -25,6 +25,10 @@ public class Course implements Serializable {
         return registeredStudents;
     }
 
+    public void setRegisteredStudents(ArrayList<Student> registeredStudents) {
+        this.registeredStudents = registeredStudents;
+    }
+
     public Student getStudent(String username) {
         for (Student s : registeredStudents) {
             if (s.getCredential().getUsername().compareTo(username) == 0) {
